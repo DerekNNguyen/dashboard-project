@@ -1,15 +1,17 @@
 // ====== PART 1: LIVE FINANCIAL API DATA STREAM ======
 async function fetchMarketData() {
     try {
-        // Utilizing a 100% open, CORS-enabled public endpoint for browser environments
-        const response = await fetch('https://coingecko.com');
-        if (!response.ok) throw new Error('API routing bridge degradation.');
+        // Utilizing Binance's open, CORS-accessible global spot ticker endpoints
+        const btcResponse = await fetch('https://binance.com');
+        const ethResponse = await fetch('https://binance.com');
         
-        const data = await response.json();
+        if (!btcResponse.ok || !ethResponse.ok) throw new Error('API routing bridge degradation.');
         
-        // Target dynamic UI DOM elements safely using optional chaining rules
-        const btcPrice = data?.bitcoin?.usd || 0;
-        const ethPrice = data?.ethereum?.usd || 0;
+        const btcData = await btcResponse.json();
+        const ethData = await ethResponse.json();
+        
+        const btcPrice = parseFloat(btcData.price);
+        const ethPrice = parseFloat(ethData.price);
         
         // Dynamically update UI text outputs
         document.getElementById('btc-price').innerText = `$${btcPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
@@ -25,8 +27,8 @@ async function fetchMarketData() {
     }
 }
 
-// Poll market API every 15 seconds to simulate persistent data feed streams
-setInterval(fetchMarketData, 15000);
+// Poll market API every 10 seconds to simulate persistent data feed streams
+setInterval(fetchMarketData, 10000);
 fetchMarketData();
 
 
