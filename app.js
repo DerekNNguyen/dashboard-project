@@ -1,27 +1,32 @@
 // ====== PART 1: LIVE FINANCIAL API DATA STREAM ======
 async function fetchMarketData() {
     try {
-        // Utilizing a 100% open, keyless pricing tier proxy for instant data streaming
-        const response = await fetch('https://cryptocompare.com');
-        if (!response.ok) throw new Error('Network bridge degradation.');
+        // Utilizing a 100% open, secure HTTPS proxy via Kraken's public ticker node
+        const response = await fetch('https://kraken.com');
+        if (!response.ok) throw new Error('API routing matrix degraded.');
         
         const data = await response.json();
         
-        // Dynamically update UI DOM Nodes
-        document.getElementById('btc-price').innerText = `$${data.BTC.USD.toLocaleString()}`;
-        document.getElementById('eth-price').innerText = `$${data.ETH.USD.toLocaleString()}`;
+        // Extracting clean string arrays from Kraken's structured JSON architecture
+        // XXBTZUSD -> 'c' array element 0 yields the most recent matching trade close price
+        const btcRaw = parseFloat(data.result.XXBTZUSD.c[0]);
+        const ethRaw = parseFloat(data.result.XETHZUSD.c[0]);
         
-        // Update Connection Status Flags
-        document.getElementById('status-dot').style.backgroundColor = '#10b981'; // Dynamic green status
+        // Dynamically update UI DOM Nodes inside your layout
+        document.getElementById('btc-price').innerText = `$${btcRaw.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        document.getElementById('eth-price').innerText = `$${ethRaw.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        
+        // Update Connection Status Flags to alert active sync state
+        document.getElementById('status-dot').style.backgroundColor = '#10b981'; // Vibrant Green
         document.getElementById('status-text').innerText = 'Online / Feed Sync Active';
     } catch (error) {
-        document.getElementById('status-dot').style.backgroundColor = '#ef4444'; // Error state fallback
-        document.getElementById('status-text').innerText = 'Feed Error / Re-connecting';
-        console.error("Data synchronization error:", error);
+        document.getElementById('status-dot').style.backgroundColor = '#ef4444'; // Alarm Red
+        document.getElementById('status-text').innerText = 'Feed Link Error / Retrying';
+        console.error("Telemetry synchronization deviation:", error);
     }
 }
 
-// Poll market API every 10 seconds to showcase persistent async connection lifecycles
+// Poll market API every 10 seconds to showcase live network caching lifecycle monitoring
 setInterval(fetchMarketData, 10000);
 fetchMarketData();
 
@@ -31,25 +36,25 @@ function calculateDrawdown() {
     const startingBalance = parseFloat(document.getElementById('account-size').value) || 0;
     const peakBalance = parseFloat(document.getElementById('current-balance').value) || 0;
     
-    // Simulating a standard Tradeify account rule parameters (\$2,000 trailing buffer)
+    // Simulating standard Tradeify account evaluation boundaries (\$2,000 trailing buffer)
     const maxDrawdownDistance = 2000; 
     
     let drawdownThreshold = peakBalance - maxDrawdownDistance;
     
-    // Guardrail rule: Once trailing threshold reaches starting balance, it stays locked
+    // Guardrail rule: Once trailing threshold reaches starting balance, it locks natively
     if (drawdownThreshold > startingBalance) {
         drawdownThreshold = startingBalance;
     }
     
     const currentLossAllowance = peakBalance - drawdownThreshold;
 
-    // Output adjustments
+    // Output parsing
     document.getElementById('drawdown-threshold').innerText = `$${drawdownThreshold.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
     document.getElementById('loss-remaining').innerText = `$${currentLossAllowance.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
     
     const lossElement = document.getElementById('loss-remaining').parentElement;
     if (currentLossAllowance <= 500) {
-        lossElement.style.color = '#ef4444'; // Risk alert styling trigger
+        lossElement.style.color = '#ef4444'; // Risk alarm state triggered
     } else {
         lossElement.style.color = '#f8fafc';
     }
@@ -77,4 +82,3 @@ function simulateDiagnostic(type) {
         }
     }, 800);
 }
-
