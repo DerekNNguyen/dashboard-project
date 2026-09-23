@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prop Firm Operations & Risk Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Trader Support Matrix & API Monitor</h1>
+        <div id="connection-status">Data Feed: <span id="status-dot"></span> <span id="status-text">Connecting...</span></div>
+    </header>
+
+    <main class="dashboard-grid">
+        <!-- Live Market Feed Card -->
+        <section class="card">
+            <h2>📊 Live Market Feed (Crypto & Futures Proxies)</h2>
+            <div class="metric"><span class="label">Bitcoin (BTC/USD):</span> <span id="btc-price">$0.00</span></div>
+            <div class="metric"><span class="label">Ethereum (ETH/USD):</span> <span id="eth-price">$0.00</span></div>
+            <p class="hint">Simulating continuous REST/WebSocket API data ingestion.</p>
+        </section>
+
+        <!-- Rule & Drawdown Simulator Card -->
+        <section class="card">
+            <h2>⚖️ Tradeify-Style Risk Simulator</h2>
+            <div class="input-group">
+                <label for="account-size">Starting Balance ($):</label>
+                <input type="number" id="account-size" value="50000">
+            </div>
+            <div class="input-group">
+                <label for="current-balance">Simulated Peak Balance ($):</label>
+                <input type="number" id="current-balance" value="50000">
+            </div>
+            <hr>
+            <div class="metric critical"><span class="label">Trailing Drawdown Threshold:</span> <span id="drawdown-threshold">$0.00</span></div>
+            <div class="metric"><span class="label">Max Permissible Loss Remaining:</span> <span id="loss-remaining">$0.00</span></div>
+            <p class="hint">Calculates an End-of-Day (EOD) or trailing drawdown rule threshold dynamically.</p>
+        </section>
+
+        <!-- Ticket Troubleshooting Console -->
+        <section class="card wide">
+            <h2>🛠️ Technical Support Scenario Sandbox</h2>
+            <p>Select a common trader ticket to run diagnostic simulation scripts:</p>
+            <div class="button-group">
+                <button onclick="simulateDiagnostic('latency')">"My chart is lagging"</button>
+                <button onclick="simulateDiagnostic('auth')">"Tradovate API authentication failed"</button>
+            </div>
+            <div id="console-output" class="terminal">Console initialized. Awaiting diagnostic instructions...</div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
