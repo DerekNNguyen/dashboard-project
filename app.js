@@ -2,7 +2,7 @@
 async function fetchMarketData() {
     try {
         // Utilizing a 100% open, CORS-approved Federal currency index node (Frankfurter framework)
-        const response = await fetch('https://frankfurter.app');
+        const response = await fetch('https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR,GBP');
         if (!response.ok) throw new Error('API routing network degradation.');
         
         const data = await response.json();
