@@ -31,20 +31,16 @@ A small front-end dashboard that models three things a trader support team deals
 
 ## Project Structure
 
-```
-dashboard-project/
-├── index.html    # Page layout and dashboard cards
-├── style.css     # Styling
-├── app.js        # API polling, drawdown logic, support console
-└── README.md
-```
+    dashboard-project/
+    ├── index.html    # Page layout and dashboard cards
+    ├── style.css     # Styling
+    ├── app.js        # API polling, drawdown logic, support console
+    └── README.md
 
 ## Run Locally
 
-```bash
-git clone https://github.com/dereknnguyen/dashboard-project.git
-cd dashboard-project
-```
+    git clone https://github.com/dereknnguyen/dashboard-project.git
+    cd dashboard-project
 
 Then open `index.html` in a browser, or serve the folder with any static server (for example `python -m http.server`).
 
